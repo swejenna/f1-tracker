@@ -59,7 +59,7 @@ function ThemeToggle() {
     >
       <div
         className={`relative w-12 h-7 rounded-full transition-colors duration-300 ${
-          isDark ? "bg-zinc-700" : "bg-green-500"
+          isDark ? "bg-zinc-700" : "bg-red-500"
         }`}
       >
         <div
