@@ -42,7 +42,22 @@
 
 html {
   background: var(--background);
+}
+
+/* Smooth theme transitions - apply to common elements without breaking hover states */
+html.dark,
+html.light {
   transition: background-color 0.3s ease;
+}
+
+body,
+main,
+header,
+section,
+nav,
+h1, h2, h3, h4, h5, h6,
+p, span, time {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 body {
