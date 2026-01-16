@@ -62,6 +62,7 @@ export interface DriverStanding {
   wins: string;
   Driver: Driver;
   Constructors: Constructor[];
+  positionChange?: number | null; // positive = moved up, negative = moved down, null = new driver
 }
 
 export interface StandingsResponse {

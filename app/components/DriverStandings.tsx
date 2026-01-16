@@ -3,6 +3,56 @@
 import { useStandings } from "@/app/hooks/useStandings";
 import { StandingRowSkeleton } from "./Skeleton";
 
+function PositionChangeIndicator({ change }: { change?: number | null }) {
+  if (change === null || change === undefined) {
+    // New driver - show "NEW" badge
+    return (
+      <div className="w-8 flex items-center justify-center">
+        <span className="text-[10px] font-semibold text-blue-400">NEW</span>
+      </div>
+    );
+  }
+
+  if (change === 0) {
+    // No change - show dash
+    return (
+      <div className="w-8 flex items-center justify-center">
+        <span className="text-zinc-600">—</span>
+      </div>
+    );
+  }
+
+  if (change > 0) {
+    // Moved up - green arrow
+    return (
+      <div className="w-8 flex items-center justify-center gap-0.5">
+        <svg className="w-3 h-3 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+          <path
+            fillRule="evenodd"
+            d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z"
+            clipRule="evenodd"
+          />
+        </svg>
+        <span className="text-xs font-medium text-green-500">{change}</span>
+      </div>
+    );
+  }
+
+  // Moved down - red arrow
+  return (
+    <div className="w-8 flex items-center justify-center gap-0.5">
+      <svg className="w-3 h-3 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+        <path
+          fillRule="evenodd"
+          d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z"
+          clipRule="evenodd"
+        />
+      </svg>
+      <span className="text-xs font-medium text-red-500">{Math.abs(change)}</span>
+    </div>
+  );
+}
+
 const teamColors: Record<string, string> = {
   red_bull: "bg-blue-600",
   ferrari: "bg-red-600",
@@ -73,7 +123,8 @@ export function DriverStandings() {
                     {standing.Constructors[0]?.name}
                   </p>
                 </div>
-                <div className="text-right">
+                <PositionChangeIndicator change={standing.positionChange} />
+                <div className="text-right min-w-[40px]">
                   <p className="text-white font-semibold">{standing.points}</p>
                   <p className="text-xs text-zinc-500">pts</p>
                 </div>
