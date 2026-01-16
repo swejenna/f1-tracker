@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { BottomNav } from "./components/BottomNav";
 import { SkipLink } from "./components/SkipLink";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,13 +34,15 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-(--background) min-h-screen transition-colors duration-300`}
       >
-        <SkipLink />
-        <div className="pb-20" id="main-content" role="main">
-          {children}
-        </div>
-        <BottomNav />
+        <ThemeProvider>
+          <SkipLink />
+          <div className="pb-20" id="main-content" role="main">
+            {children}
+          </div>
+          <BottomNav />
+        </ThemeProvider>
       </body>
     </html>
   );

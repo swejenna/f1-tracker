@@ -5,6 +5,24 @@
   --foreground: #ffffff;
 }
 
+.dark {
+  --background: #000000;
+  --foreground: #ffffff;
+  --card-bg: #18181b;
+  --card-border: #27272a;
+  --nav-bg: rgba(0, 0, 0, 0.8);
+  --muted: #a1a1aa;
+}
+
+.light {
+  --background: #f4f4f5;
+  --foreground: #09090b;
+  --card-bg: #ffffff;
+  --card-border: #e4e4e7;
+  --nav-bg: rgba(255, 255, 255, 0.8);
+  --muted: #71717a;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -17,7 +35,8 @@
 }
 
 html {
-  background: #000000;
+  background: var(--background);
+  transition: background-color 0.3s ease;
 }
 
 body {
