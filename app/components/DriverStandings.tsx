@@ -88,10 +88,10 @@ export function DriverStandings() {
   return (
     <section aria-labelledby="standings-heading">
       <div className="flex items-baseline justify-between mb-4">
-        <h2 id="standings-heading" className="text-xl font-semibold text-white">
+        <h2 id="standings-heading" className="text-xl font-semibold text-(--foreground)">
           Driver Standings
         </h2>
-        <span className="text-xs text-zinc-400">{getSeasonLabel()}</span>
+        <span className="text-xs text-(--muted)">{getSeasonLabel()}</span>
       </div>
 
       {loading ? (
@@ -115,7 +115,7 @@ export function DriverStandings() {
             return (
               <li
                 key={standing.Driver.driverId}
-                className="flex items-center gap-3 p-3 rounded-xl bg-zinc-900 border border-zinc-800 transition-all duration-200 hover:bg-zinc-800 hover:border-zinc-700 focus-within:ring-2 focus-within:ring-red-500"
+                className="flex items-center gap-3 p-3 rounded-xl bg-(--card-bg) border border-(--card-border) transition-all duration-200 hover:bg-(--card-hover) hover:border-(--card-border-hover) focus-within:ring-2 focus-within:ring-red-500"
                 aria-label={`Position ${standing.position}: ${driverName}, ${teamName}, ${standing.points} points`}
               >
                 <div
@@ -125,17 +125,17 @@ export function DriverStandings() {
                   {standing.position}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-white font-medium truncate">
+                  <p className="text-(--foreground) font-medium truncate">
                     {driverName}
                   </p>
-                  <p className="text-xs text-zinc-400 truncate">
+                  <p className="text-xs text-(--muted) truncate">
                     {teamName}
                   </p>
                 </div>
                 <PositionChangeIndicator change={standing.positionChange} />
                 <div className="text-right min-w-[40px]">
-                  <p className="text-white font-semibold">{standing.points}</p>
-                  <p className="text-xs text-zinc-400">pts</p>
+                  <p className="text-(--foreground) font-semibold">{standing.points}</p>
+                  <p className="text-xs text-(--muted)">pts</p>
                 </div>
               </li>
             );

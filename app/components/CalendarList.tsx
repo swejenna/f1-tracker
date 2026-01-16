@@ -51,7 +51,7 @@ export function CalendarList() {
         <section key={month} aria-labelledby={`month-${month.replace(/\s/g, "-")}`}>
           <h3
             id={`month-${month.replace(/\s/g, "-")}`}
-            className="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-3 px-1"
+            className="text-sm font-semibold text-(--muted) uppercase tracking-wider mb-3 px-1"
           >
             {month}
           </h3>
@@ -82,8 +82,8 @@ export function CalendarList() {
                     isNext
                       ? "bg-red-950/30 border-red-900/50 hover:bg-red-950/50 hover:border-red-800"
                       : isPast
-                      ? "bg-zinc-900/50 border-zinc-800/50 hover:bg-zinc-800/50 hover:border-zinc-700/50"
-                      : "bg-zinc-900 border-zinc-800 hover:bg-zinc-800 hover:border-zinc-700"
+                      ? "bg-(--card-bg)/50 border-(--card-border)/50 hover:bg-(--card-hover)/50 hover:border-(--card-border-hover)/50"
+                      : "bg-(--card-bg) border-(--card-border) hover:bg-(--card-hover) hover:border-(--card-border-hover)"
                   }`}
                   aria-label={`Round ${race.round}: ${race.raceName}, ${race.Circuit.Location.locality}, ${race.Circuit.Location.country}, ${fullDateString}${isSprint ? ", Sprint weekend" : ""}, ${statusText}`}
                 >
@@ -92,12 +92,12 @@ export function CalendarList() {
                       className={`w-10 text-center ${isPast ? "opacity-50" : ""}`}
                       aria-hidden="true"
                     >
-                      <p className="text-xs text-zinc-400 uppercase">
+                      <p className="text-xs text-(--muted) uppercase">
                         {raceDate.toLocaleDateString("en-US", { month: "short" })}
                       </p>
                       <p
                         className={`text-lg font-bold ${
-                          isNext ? "text-red-400" : "text-white"
+                          isNext ? "text-red-400" : "text-(--foreground)"
                         }`}
                       >
                         {raceDate.getDate()}
@@ -107,7 +107,7 @@ export function CalendarList() {
                       <div className="flex items-center gap-2">
                         <p
                           className={`font-medium truncate ${
-                            isNext ? "text-white" : isPast ? "text-zinc-400" : "text-white"
+                            isNext ? "text-(--foreground)" : isPast ? "text-(--muted)" : "text-(--foreground)"
                           }`}
                         >
                           {race.raceName}
@@ -121,7 +121,7 @@ export function CalendarList() {
                           </span>
                         )}
                       </div>
-                      <p className="text-xs text-zinc-400 truncate">
+                      <p className="text-xs text-(--muted) truncate">
                         {race.Circuit.Location.locality},{" "}
                         {race.Circuit.Location.country}
                       </p>

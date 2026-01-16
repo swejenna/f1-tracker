@@ -3,7 +3,7 @@
 export function Skeleton({ className = "" }: { className?: string }) {
   return (
     <div
-      className={`animate-pulse rounded-xl bg-zinc-800/50 ${className}`}
+      className={`animate-pulse rounded-xl bg-(--skeleton) ${className}`}
       aria-hidden="true"
     />
   );
@@ -12,7 +12,7 @@ export function Skeleton({ className = "" }: { className?: string }) {
 export function RaceCardSkeleton() {
   return (
     <div
-      className="rounded-2xl bg-zinc-900 p-4 border border-zinc-800"
+      className="rounded-2xl bg-(--card-bg) p-4 border border-(--card-border)"
       role="presentation"
       aria-hidden="true"
     >
@@ -30,7 +30,7 @@ export function RaceCardSkeleton() {
 export function StandingRowSkeleton() {
   return (
     <div
-      className="flex items-center gap-3 p-3 rounded-xl bg-zinc-900 border border-zinc-800"
+      className="flex items-center gap-3 p-3 rounded-xl bg-(--card-bg) border border-(--card-border)"
       role="presentation"
       aria-hidden="true"
     >

@@ -10,8 +10,11 @@
   --foreground: #ffffff;
   --card-bg: #18181b;
   --card-border: #27272a;
+  --card-hover: #27272a;
+  --card-border-hover: #3f3f46;
   --nav-bg: rgba(0, 0, 0, 0.8);
   --muted: #a1a1aa;
+  --skeleton: rgba(39, 39, 42, 0.5);
 }
 
 .light {
@@ -19,8 +22,11 @@
   --foreground: #09090b;
   --card-bg: #ffffff;
   --card-border: #e4e4e7;
+  --card-hover: #f4f4f5;
+  --card-border-hover: #d4d4d8;
   --nav-bg: rgba(255, 255, 255, 0.8);
   --muted: #71717a;
+  --skeleton: rgba(228, 228, 231, 0.5);
 }
 
 @theme inline {

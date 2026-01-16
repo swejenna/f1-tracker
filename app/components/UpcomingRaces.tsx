@@ -18,7 +18,7 @@ export function UpcomingRaces() {
 
   return (
     <section aria-labelledby="upcoming-races-heading">
-      <h2 id="upcoming-races-heading" className="text-xl font-semibold text-white mb-4">
+      <h2 id="upcoming-races-heading" className="text-xl font-semibold text-(--foreground) mb-4">
         Upcoming Races
       </h2>
 
@@ -39,8 +39,8 @@ export function UpcomingRaces() {
           ))}
         </div>
       ) : (
-        <div className="rounded-2xl bg-zinc-900 border border-zinc-800 p-4">
-          <p className="text-zinc-400 text-sm">No upcoming races scheduled</p>
+        <div className="rounded-2xl bg-(--card-bg) border border-(--card-border) p-4">
+          <p className="text-(--muted) text-sm">No upcoming races scheduled</p>
         </div>
       )}
     </section>
