@@ -9,11 +9,12 @@ const tabs = [
     href: "/",
     icon: (active: boolean) => (
       <svg
-        className={`w-6 h-6 ${active ? "text-red-500" : "text-zinc-500"}`}
+        className={`w-6 h-6 ${active ? "text-red-500" : "text-zinc-400"}`}
         fill={active ? "currentColor" : "none"}
         viewBox="0 0 24 24"
         stroke="currentColor"
         strokeWidth={active ? 0 : 1.5}
+        aria-hidden="true"
       >
         <path
           strokeLinecap="round"
@@ -28,11 +29,12 @@ const tabs = [
     href: "/calendar",
     icon: (active: boolean) => (
       <svg
-        className={`w-6 h-6 ${active ? "text-red-500" : "text-zinc-500"}`}
+        className={`w-6 h-6 ${active ? "text-red-500" : "text-zinc-400"}`}
         fill={active ? "currentColor" : "none"}
         viewBox="0 0 24 24"
         stroke="currentColor"
         strokeWidth={active ? 0 : 1.5}
+        aria-hidden="true"
       >
         <path
           strokeLinecap="round"
@@ -48,20 +50,32 @@ export function BottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-t border-zinc-800 safe-area-bottom">
-      <div className="flex justify-around items-center h-16 max-w-lg mx-auto px-6">
+    <nav
+      className="fixed bottom-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-t border-zinc-800 safe-area-bottom"
+      aria-label="Main navigation"
+    >
+      <div
+        className="flex justify-around items-center h-16 max-w-lg mx-auto px-6"
+        role="tablist"
+        aria-label="Navigation tabs"
+      >
         {tabs.map((tab) => {
           const isActive = pathname === tab.href;
           return (
             <Link
               key={tab.href}
               href={tab.href}
-              className="flex flex-col items-center justify-center gap-1 min-w-[64px] py-2 rounded-xl transition-all duration-200 hover:bg-zinc-800/50 active:scale-95"
+              role="tab"
+              aria-selected={isActive}
+              aria-current={isActive ? "page" : undefined}
+              className={`flex flex-col items-center justify-center gap-1 min-w-[64px] py-2 rounded-xl transition-all duration-200 hover:bg-zinc-800/50 active:scale-95 focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black ${
+                isActive ? "" : ""
+              }`}
             >
               {tab.icon(isActive)}
               <span
                 className={`text-xs font-medium ${
-                  isActive ? "text-red-500" : "text-zinc-500"
+                  isActive ? "text-red-500" : "text-zinc-400"
                 }`}
               >
                 {tab.name}

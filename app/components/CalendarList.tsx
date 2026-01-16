@@ -13,7 +13,7 @@ export function CalendarList() {
 
   if (error) {
     return (
-      <div className="rounded-2xl bg-red-950/20 border border-red-900/50 p-4">
+      <div className="rounded-2xl bg-red-950/20 border border-red-900/50 p-4" role="alert">
         <p className="text-red-400 text-sm">Failed to load calendar: {error}</p>
       </div>
     );
@@ -21,11 +21,13 @@ export function CalendarList() {
 
   if (loading) {
     return (
-      <div className="flex flex-col gap-3">
-        <RaceCardSkeleton />
-        <RaceCardSkeleton />
-        <RaceCardSkeleton />
-        <RaceCardSkeleton />
+      <div aria-busy="true" aria-label="Loading race calendar">
+        <div className="flex flex-col gap-3">
+          <RaceCardSkeleton />
+          <RaceCardSkeleton />
+          <RaceCardSkeleton />
+          <RaceCardSkeleton />
+        </div>
       </div>
     );
   }
@@ -44,37 +46,53 @@ export function CalendarList() {
   }, {});
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6" role="list" aria-label="2026 Formula 1 race calendar">
       {Object.entries(groupedRaces).map(([month, monthRaces]) => (
-        <section key={month}>
-          <h3 className="text-sm font-semibold text-zinc-500 uppercase tracking-wider mb-3 px-1">
+        <section key={month} aria-labelledby={`month-${month.replace(/\s/g, "-")}`}>
+          <h3
+            id={`month-${month.replace(/\s/g, "-")}`}
+            className="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-3 px-1"
+          >
             {month}
           </h3>
-          <div className="flex flex-col gap-2">
+          <ul className="flex flex-col gap-2" role="list">
             {monthRaces.map((race) => {
               const raceDate = new Date(`${race.date}T${race.time || "00:00:00Z"}`);
               const isPast = raceDate < new Date();
               const isNext = race.round === nextRaceRound;
               const isSprint = !!race.Sprint;
 
+              const fullDateString = raceDate.toLocaleDateString("en-US", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              });
+
+              const statusText = isPast
+                ? "Completed"
+                : isNext
+                ? "Next race"
+                : "Upcoming";
+
               return (
-                <div
+                <li
                   key={race.round}
-                  className={`rounded-xl p-3 border transition-all duration-200 cursor-pointer active:scale-[0.98] ${
+                  className={`rounded-xl p-3 border transition-all duration-200 focus-within:ring-2 focus-within:ring-red-500 ${
                     isNext
                       ? "bg-red-950/30 border-red-900/50 hover:bg-red-950/50 hover:border-red-800"
                       : isPast
                       ? "bg-zinc-900/50 border-zinc-800/50 hover:bg-zinc-800/50 hover:border-zinc-700/50"
                       : "bg-zinc-900 border-zinc-800 hover:bg-zinc-800 hover:border-zinc-700"
                   }`}
+                  aria-label={`Round ${race.round}: ${race.raceName}, ${race.Circuit.Location.locality}, ${race.Circuit.Location.country}, ${fullDateString}${isSprint ? ", Sprint weekend" : ""}, ${statusText}`}
                 >
                   <div className="flex items-center gap-3">
                     <div
-                      className={`w-10 text-center ${
-                        isPast ? "opacity-50" : ""
-                      }`}
+                      className={`w-10 text-center ${isPast ? "opacity-50" : ""}`}
+                      aria-hidden="true"
                     >
-                      <p className="text-xs text-zinc-500 uppercase">
+                      <p className="text-xs text-zinc-400 uppercase">
                         {raceDate.toLocaleDateString("en-US", { month: "short" })}
                       </p>
                       <p
@@ -95,18 +113,24 @@ export function CalendarList() {
                           {race.raceName}
                         </p>
                         {isSprint && (
-                          <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-orange-500/20 text-orange-400 shrink-0">
+                          <span
+                            className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-orange-500/20 text-orange-400 shrink-0"
+                            aria-hidden="true"
+                          >
                             Sprint
                           </span>
                         )}
                       </div>
-                      <p className="text-xs text-zinc-500 truncate">
+                      <p className="text-xs text-zinc-400 truncate">
                         {race.Circuit.Location.locality},{" "}
                         {race.Circuit.Location.country}
                       </p>
                     </div>
                     {isNext && (
-                      <span className="text-xs font-semibold px-2 py-1 rounded-full bg-red-500/20 text-red-400 shrink-0">
+                      <span
+                        className="text-xs font-semibold px-2 py-1 rounded-full bg-red-500/20 text-red-400 shrink-0"
+                        aria-hidden="true"
+                      >
                         Next
                       </span>
                     )}
@@ -115,6 +139,7 @@ export function CalendarList() {
                         className="w-5 h-5 text-green-500 shrink-0 opacity-50"
                         fill="currentColor"
                         viewBox="0 0 20 20"
+                        aria-hidden="true"
                       >
                         <path
                           fillRule="evenodd"
@@ -124,10 +149,10 @@ export function CalendarList() {
                       </svg>
                     )}
                   </div>
-                </div>
+                </li>
               );
             })}
-          </div>
+          </ul>
         </section>
       ))}
     </div>
