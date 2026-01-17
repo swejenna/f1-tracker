@@ -4,6 +4,7 @@ import "./globals.css";
 import { BottomNav } from "./components/BottomNav";
 import { SkipLink } from "./components/SkipLink";
 import { ThemeProvider } from "./components/ThemeProvider";
+import { Analytics } from '@vercel/analytics/next';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,6 +41,7 @@ export default function RootLayout({
           <SkipLink />
           <div className="pb-20" id="main-content" role="main">
             {children}
+            <Analytics />
           </div>
           <BottomNav />
         </ThemeProvider>
