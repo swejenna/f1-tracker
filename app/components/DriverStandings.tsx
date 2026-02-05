@@ -54,16 +54,16 @@ function PositionChangeIndicator({ change }: { change?: number | null }) {
 }
 
 const teamColors: Record<string, string> = {
-  red_bull: "bg-blue-600",
-  ferrari: "bg-red-600",
-  mercedes: "bg-teal-500",
-  mclaren: "bg-orange-500",
-  aston_martin: "bg-green-700",
-  alpine: "bg-pink-500",
-  williams: "bg-blue-400",
-  rb: "bg-blue-500",
-  sauber: "bg-green-500",
-  haas: "bg-gray-400",
+  red_bull: "bg-blue-700",
+  ferrari: "bg-red-700",
+  mercedes: "bg-teal-700",
+  mclaren: "bg-orange-600",
+  aston_martin: "bg-green-800",
+  alpine: "bg-pink-700",
+  williams: "bg-blue-700",
+  rb: "bg-blue-600",
+  sauber: "bg-green-700",
+  haas: "bg-gray-600",
 };
 
 export function DriverStandings() {

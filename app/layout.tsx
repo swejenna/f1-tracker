@@ -39,10 +39,10 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <SkipLink />
-          <div className="pb-20" id="main-content" role="main">
+          <main className="pb-20" id="main-content">
             {children}
             <Analytics />
-          </div>
+          </main>
           <BottomNav />
         </ThemeProvider>
       </body>

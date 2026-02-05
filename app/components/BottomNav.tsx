@@ -54,7 +54,9 @@ function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
+      role="switch"
+      aria-checked={isDark}
+      aria-label={`Dark mode, currently ${isDark ? "on" : "off"}`}
       className="flex flex-col items-center justify-center gap-1 min-w-[64px] py-2"
     >
       <div
@@ -93,19 +95,13 @@ export function BottomNav() {
       className="fixed bottom-0 left-0 right-0 z-50 bg-(--nav-bg) backdrop-blur-xl border-t border-(--card-border) safe-area-bottom transition-colors duration-300"
       aria-label="Main navigation"
     >
-      <div
-        className="flex justify-around items-center h-16 max-w-lg mx-auto px-6"
-        role="tablist"
-        aria-label="Navigation tabs"
-      >
+      <div className="flex justify-around items-center h-16 max-w-lg mx-auto px-6">
         {tabs.map((tab) => {
           const isActive = pathname === tab.href;
           return (
             <Link
               key={tab.href}
               href={tab.href}
-              role="tab"
-              aria-selected={isActive}
               aria-current={isActive ? "page" : undefined}
               className={`flex flex-col items-center justify-center gap-1 min-w-[64px] py-2 rounded-xl transition-all duration-200 hover:bg-zinc-500/20 active:scale-95 focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-(--background) ${
                 isActive ? "" : ""

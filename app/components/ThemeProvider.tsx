@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useSyncExternalStore } from "react";
 
 type Theme = "dark" | "light";
 
@@ -11,30 +11,42 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
-  const [mounted, setMounted] = useState(false);
+const THEME_KEY = "theme";
+const DEFAULT_THEME: Theme = "dark";
 
-  useEffect(() => {
-    setMounted(true);
-    const stored = localStorage.getItem("theme") as Theme | null;
-    if (stored) {
-      setTheme(stored);
-    }
-  }, []);
+function getThemeSnapshot(): Theme {
+  if (typeof window === "undefined") return DEFAULT_THEME;
+  return (localStorage.getItem(THEME_KEY) as Theme) || DEFAULT_THEME;
+}
 
-  useEffect(() => {
-    if (mounted) {
-      const root = document.documentElement;
-      root.classList.remove("dark", "light");
-      root.classList.add(theme);
-      localStorage.setItem("theme", theme);
-    }
-  }, [theme, mounted]);
+function getServerSnapshot(): Theme {
+  return DEFAULT_THEME;
+}
 
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+function subscribeToTheme(callback: () => void): () => void {
+  const handleStorage = (e: StorageEvent) => {
+    if (e.key === THEME_KEY) callback();
   };
+  window.addEventListener("storage", handleStorage);
+  return () => window.removeEventListener("storage", handleStorage);
+}
+
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const theme = useSyncExternalStore(subscribeToTheme, getThemeSnapshot, getServerSnapshot);
+
+  // Sync DOM class with theme state (valid effect: syncing React → external system)
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.remove("dark", "light");
+    root.classList.add(theme);
+  }, [theme]);
+
+  const toggleTheme = useCallback(() => {
+    const newTheme: Theme = theme === "dark" ? "light" : "dark";
+    localStorage.setItem(THEME_KEY, newTheme);
+    // Trigger re-render via useSyncExternalStore subscription
+    window.dispatchEvent(new StorageEvent("storage", { key: THEME_KEY }));
+  }, [theme]);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
